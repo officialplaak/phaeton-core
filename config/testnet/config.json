@@ -1,0 +1,38 @@
+{
+	"wsPort": 7001,
+	"httpPort": 7000,
+	"db": {
+		"database": "plaak_stage"
+	},
+	"forging": {
+		"force": true,
+		"defaultPassword": "elephant tree paris dragon chair galaxy",
+		"delegates": [
+		
+			{	
+				"encryptedPassphrase": "salt=5af9a632505bb37c67d672597467829e&cipherText=30790306a854510cf56396a6d014ce61f520bb6fff006ccca6be39fa02df18f7f33323436e77834f8f2d987e1cb36494df1c360f13f03289ac70fa794ea30e6bae60a937eb623b507072&iv=7df15ab807a20b62c35284d7&tag=8f088f117f177d7c3ffc0e8ed7aa2be7&version=1",
+				"publicKey": "5e00ec481ae697c4ad18362a0dd3180762880f56a839c89b640f944b60cfffbe"
+			},
+			{
+				"encryptedPassphrase": "salt=872cabcf5254a415884be43bb83e5a68&cipherText=2bbf74cf31790be95140bc0543e390699191827db9bf188ade2774f343a93ac218c4a961ee8479a863c8ff2b373e08c28b916bdbfb7ae2f38b34ab3cda0c071878885d7ea1658bb8e511&iv=6169c671bce99cc00bc7b979&tag=a21d7c589755e2b92b9be74d9f00e6d1&version=1",
+				"publicKey":"6caaef6873e61e39e413c9011d816a953b8169cc04d50eb5fce57f35ebc87786"
+			},
+			{
+				"encryptedPassphrase": "salt=1978fb92d10b522a39f142b831036a72&cipherText=4f005376d2d0de34f2e34ca50d4dc42a0095f16fbe85345fa388be2eb9f8bdb0eb759c9c71ce3dc4328eb699d0db9ac1b8c8f0cd4d08a2464479c5829c4eb01b6ca15fca07923fca69da5e47&iv=1ad4e838b9645fe402f63941&tag=d25320ce58716b5de911ca753e87eb91&version=1", 
+				"publicKey":"f239284d1e3f4883d091bc88e9c7cd8fad4a41db7dd0dde58bbc3771b01f4ec8"
+			},
+			{
+				"encryptedPassphrase": "salt=dc8c2f12873b18f2811cef265400c393&cipherText=aae0ad897493bdef3881cc2abd12d949a2420e438f5be3e5b9d687e39163b4c21e4e48206fc09c4965a1fc9a912c05159fb16e502f95ba6368c24dc2a6c2fbada2968d5f513cd91ed7794af49f134b75&iv=2424271865fd995c37df6228&tag=dd456ed877d08fa4002728d4ccb831f4&version=1", 
+				"publicKey":"8015e3ba9c8614219b8a323a3270a15a342d48f5070b50b94bd5a643273b4fa5"
+			}
+		]
+	},
+	"peers": {
+		"list": [
+			{
+				"ip": "192.168.0.127",
+				"wsPort": "8001"
+			}
+		]
+	}
+}

@@ -1,0 +1,95 @@
+{
+	"wsPort": 5000,
+	"httpPort": 4000,
+	"address": "0.0.0.0",
+	"fileLogLevel": "info",
+	"logFileName": "logs/plaak.log",
+	"consoleLogLevel": "debug",
+	"trustProxy": true,
+	"topAccounts": true,
+	"cacheEnabled": false,
+	"wsWorkers": 2,
+	"db": {
+		"host": "localhost",
+		"port": 5432,
+		"database": "",
+		"user": "root",
+		"password": "plaak@123",
+		"min": 10,
+		"max": 95,
+		"poolIdleTimeout": 30000,
+		"reapIntervalMillis": 1000,
+		"logEvents": ["error"],
+		"logFileName": "logs/plaak_db.log"
+	},
+	"redis": {
+		"host": "127.0.0.1",
+		"port": 6380,
+		"db": 0,
+		"password": null
+	},
+	"api": {
+		"enabled": true,
+		"access": {
+			"public": true,
+			"whiteList": ["127.0.0.1","13.250.116.189"]
+		},
+		"ssl": {
+			"enabled": false,
+			"options": {
+				"port": 442,
+				"address": "0.0.0.0",
+				"key": "/etc/apache2/ssl/wallet.key",
+				"cert": "/etc/apache2/ssl/wallet.crt"
+			}
+		},
+		"options": {
+			"limits": {
+				"max": 0,
+				"delayMs": 0,
+				"delayAfter": 0,
+				"windowMs": 60000
+			},
+			"cors": {
+				"origin": "*",
+				"methods": ["GET", "POST", "PUT"]
+			}
+		}
+	},
+	"peers": {
+		"enabled": true,
+		"list": [],
+		"access": {
+			"blackList": []
+		},
+		"options": {
+			"timeout": 5000,
+			"broadhashConsensusCalculationInterval": 5000,
+			"wsEngine": "ws"
+		}
+	},
+	"broadcasts": {
+		"active": true,
+		"broadcastInterval": 1000,
+		"broadcastLimit": 25,
+		"parallelLimit": 20,
+		"releaseLimit": 25,
+		"relayLimit": 3
+	},
+	"transactions": {
+		"maxTransactionsPerQueue": 1000
+	},
+	"forging": {
+		"force": true,
+		"delegates": [],
+		"access": {
+			"whiteList": ["127.0.0.1"]
+		}
+	},
+	"syncing": {
+		"active": true
+	},
+	"loading": {
+		"loadPerIteration": 5000
+	}
+}
