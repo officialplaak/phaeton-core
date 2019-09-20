@@ -241,20 +241,79 @@ class Round {
 	 * @returns {function} Promise with address array
 	 */
 
-	async getVoters(delegate) {
+	async getVoters(delegate, change) {
+		const roundChanges = new RoundChanges(this.scope);
+		const queries = [];
+		const self = this;
+		let changes;
+		let voter;
+		let p;
+		const roundRewards = [];
 		return new Promise((resolve, reject) => {
 			this.scope.library.db.voters
 			.list({
 				publicKey: delegate,
-				limit: 10,
+				limit: 1,
 				offset: 0,
 			})
 			.then(rows => {
 				const addresses = rows.map(a => a.accountId);
-				resolve(addresses);
+				// Reverse delegates if going backwards
+				const voters = self.scope.backwards
+					? addresses.reverse()
+					: addresses;
+
+				// Reverse rewards if going backwards
+				if (self.scope.backwards) {
+					self.scope.roundRewards.reverse();
+				}
+				for (let i = 0; i < addresses.length; i++) {
+					voter = addresses[i];
+					changes = roundChanges.voters(i, change, addresses);
+					this.scope.library.logger.trace('Voters changes', {
+						voters,
+						changes,
+					});
+					const accountData = {
+						address: voter,
+						balance: self.scope.backwards ? -changes.balance : changes.balance,
+						u_balance: self.scope.backwards ? -changes.balance : changes.balance,
+						round: self.scope.round,
+						fees: self.scope.backwards ? -changes.fees : changes.fees,
+						rewards: self.scope.backwards ? -changes.rewards : changes.rewards,
+					};
+
+					p = new Promise((resolve, reject) => {
+						self.scope.modules.accounts.mergeAccountAndGet(
+							accountData,
+							(err, account) => {
+								if (err) {
+									reject(err);
+								} else {
+									resolve(account);
+								}
+							},
+							self.t
+						);
+					});
+		
+					queries.push(p);
+
+					// Aggregate round rewards data - when going forward
+					if (!self.scope.backwards) {
+						roundRewards.push({
+							timestamp: self.scope.block.timestamp,
+							fees: new Bignum(changes.fees).toString(),
+							reward: new Bignum(changes.rewards).toString(),
+							round: self.scope.round,
+							address: voter,
+						});
+					}
+				}
+				resolve();
 			})
 			.catch(err => {
-				library.logger.error(err.stack);
+				this.scope.library.logger.error(err.stack);
 				reject(`Failed to get voters for delegate: ${delegate.publicKey}`);
 			});
 		});
@@ -288,7 +347,7 @@ class Round {
 		for (let i = 0; i < self.scope.roundDelegates.length; i++) {
 			delegate = self.scope.roundDelegates[i];
 			changes = roundChanges.at(i);
-			const voters = await self.getVoters(delegate, changes);
+			
 			// const votersChanges = roundChanges.voters()
 			// console.log(voters);
 
@@ -332,6 +391,7 @@ class Round {
 					publicKey: delegate,
 				});
 			}
+			// await self.getVoters(delegate, changes);
 		}
 
 		// Decide which delegate receives fees remainder
