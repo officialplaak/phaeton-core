@@ -62,36 +62,30 @@ function RoundChanges(scope) {
  * @todo Add description for the params
  */
 RoundChanges.prototype.at = function(index) {
-	var delegateFee = this.roundFees * 7 / 10;
-	var fees = new Bignum(this.roundFees.toPrecision(15))
+	var fees = new Bignum((this.roundFees * 7 / 10).toPrecision(15))
 		.dividedBy(slots.delegates)
 		.floor();
-	var feeReward = new Bignum(delegateFee.toPrecision(15))
-	.dividedBy(slots.delegates)
-	.floor();
-	var feesRemaining = new Bignum(this.roundFees.toPrecision(15)).minus(
+	var feesRemaining = new Bignum(fees.toPrecision(15)).minus(
 		fees.times(slots.delegates)
 	);
 	var rewards =
 		new Bignum(this.roundRewards[index].toPrecision(15)).floor() || 0;
 
 	return {
-		fees: Number(feeReward.toFixed()),
+		fees: Number(fees.toFixed()),
 		feesRemaining: Number(feesRemaining.toFixed()),
 		rewards: Number(rewards.toFixed()),
-		balance: Number(feeReward.add(rewards).toFixed()),
+		balance: Number(fees.add(rewards).toFixed()),
 	};
 };
 
-RoundChanges.prototype.voters = function(index, changes, addresses) {
-	var votersFee = Number(this.roundFees * 3 / 10);
-	var fees = new Bignum(votersFee.toPrecision(15))
+RoundChanges.prototype.voters = function(index, addresses) {
+	var fees = new Bignum((this.roundFees * 3 / 10).toPrecision(15))
 		.dividedBy(addresses.length)
 		.floor();
 	var feesRemaining = new Bignum(fees.toPrecision(15)).minus(
 		fees.times(addresses.length)
 	);
-	//var rewards = new Bignum(this.roundRewards[index].toPrecision(15)).floor() || 0;
 	var rewards = 0;
 
 	return {
