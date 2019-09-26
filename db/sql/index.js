@@ -131,6 +131,7 @@ module.exports = {
 	},
 	voters: {
 		getVoters: link('voters/get_voters.sql'),
+		getAllVoters: link('voters/get_all_voters.sql'),
 		getVotersCount: link('voters/get_voters_count.sql'),
 	},
 };

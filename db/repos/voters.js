@@ -48,7 +48,11 @@ class VotersRepository {
 	 */
 	list(params) {
 		// TODO: Should use a result-specific method, not .query
-		return this.db.query(sql.getVoters, params);
+		if(params.limit) {
+			return this.db.query(sql.getVoters, params);
+		} else {
+			return this.db.query(sql.getAllVoters, params);
+		}
 	}
 
 	/**

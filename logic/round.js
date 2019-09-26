@@ -251,9 +251,7 @@ class Round {
 		return new Promise((resolve, reject) => {
 			this.scope.library.db.voters
 				.list({
-					publicKey: delegate,
-					limit: 10,
-					offset: 0,
+					publicKey: delegate
 				})
 				.then(rows => {
 					const addresses = rows.map(a => a.accountId);
