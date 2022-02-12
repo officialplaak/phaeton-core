@@ -44,7 +44,7 @@
     "prepublishOnly": "npm run check:dependencies"
   },
   "dependencies": {
-    "ajv": "=6.5.2",
+    "ajv": "=6.12.3",
     "async": "=2.4.1",
     "bagpipes": "^0.2.0",
     "bignumber.js": "=4.0.2",
