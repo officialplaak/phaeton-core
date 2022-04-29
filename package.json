@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "ajv": "=6.5.2",
-    "async": "=2.4.1",
+    "async": "=2.6.4",
     "bagpipes": "^0.2.0",
     "bignumber.js": "=4.0.2",
     "blakejs": "=1.1.0",
